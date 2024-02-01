@@ -3,8 +3,8 @@ import Router from "../pages/router";
 import { ThemeProvider } from "styled-components";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import light from "../styles/Themes/light";
-import dark from "../styles/Themes/dark";
+import light from "../styles/themes/light";
+import dark from "../styles/themes/dark";
 
 function App() {
   const theme = useSelector((state: RootState) => state.theme.theme);
