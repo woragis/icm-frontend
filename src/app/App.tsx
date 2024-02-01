@@ -1,17 +1,28 @@
-import styled from "styled-components";
-import Contrib from "../pages/Contrib";
-
-const RegisterForm = () => {};
-const LoginForm = () => {};
-
-// default route
+import { BrowserRouter } from "react-router-dom";
+import Router from "../pages/router";
+import { ThemeProvider } from "styled-components";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
+import light from "../styles/Themes/light";
+import dark from "../styles/Themes/dark";
 
 function App() {
+  const theme = useSelector((state: RootState) => state.theme.theme);
+
   return (
-    <div className="App">
-      <h1>Jezreel</h1>
-      <Contrib />
-    </div>
+    <BrowserRouter>
+      <ThemeProvider
+        theme={
+          theme === "light" ||
+          (theme === "automatic" &&
+            window.matchMedia("(prefers-color-scheme: light)").matches)
+            ? light
+            : dark
+        }
+      >
+        <Router />
+      </ThemeProvider>
+    </BrowserRouter>
   );
 }
 
