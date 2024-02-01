@@ -22,7 +22,6 @@ const GlobalStyles = createGlobalStyle`
   }
 
   * > form {
-    border-radius: 20px;
     width: 600px;
     min-height: 300px;
     margin: 30px;
@@ -34,18 +33,35 @@ const GlobalStyles = createGlobalStyle`
     flex-direction: column;
 
     color: white;
-    border: 5px solid ${(props) => props.theme.color.darkPrimary};
-    background-color: ${(props) => props.theme.color.background};
-    box-shadow: 0 0 ${(props) => props.theme.shadow.big} ${(props) =>
+    border: 3px solid ${(props) => props.theme.color.darkPrimary};
+    border-radius: 10px;
+    background-color: transparent;
+    box-shadow: inset 0 0 ${(props) => props.theme.shadow.medium} ${(props) =>
   props.theme.color.lightPrimary};
+
+  position: relative;
+  z-index: 2;
+  &::before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    border: 3px solid transparent;
+    border-radius: 10px;
+    background: transparent;
+    box-shadow: 0 0 ${(props) => props.theme.shadow.medium} ${(props) =>
+  props.theme.color.lightPrimary};
+    z-index: -1;
+    }
   }
 
   .login-element, .register-element {
     transition: 1s;
-    color: ${(props) => props.theme.color.darkAccent};
+    color: ${(props) => props.theme.color.lightPrimary};
 
     label {
       text-align: center;
+      color: ${(props) => props.theme.color.lightPrimary};      
       font-size: 1.4em;
       font-weight: 700;
       margin: 5px 0;
@@ -56,7 +72,7 @@ const GlobalStyles = createGlobalStyle`
         content: '';
         height: 1px;
         width: 100px;
-        background-color: ${(props) => props.theme.color.darkAccent};
+        background-color: ${(props) => props.theme.color.lightPrimary};
         bottom: 0;
         left: 50%;
         transform: translate(-50%, 0);

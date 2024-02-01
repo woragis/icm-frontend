@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const StyledHeader = styled.header`
-  background-color: ${(props) => props.theme.color.normalPrimary};
+  background-color: ${(props) => props.theme.color.darkNeutral};
   height: 50px;
   display: grid;
   align-content: center;
@@ -27,7 +27,7 @@ export const StyledLogo = styled.svg`
   width: 180px;
   height: 55px;
   g {
-    fill: ${(props) => props.theme.color.darkAccent};
+    fill: ${(props) => props.theme.color.normalPrimary};
   }
 `;
 

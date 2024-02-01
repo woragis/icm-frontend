@@ -21,7 +21,7 @@ const theme = {
     lightAccent: "#FFDE85",
     darkAccent: "#F5B400",
 
-    background: "#292F36",
+    background: "#EFE6DD",
   },
   shadow: {
     big: "0",
