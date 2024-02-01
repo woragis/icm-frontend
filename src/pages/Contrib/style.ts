@@ -1,24 +1,7 @@
 import styled from "styled-components";
 
-export const StyledForm = styled.main`
-  height: auto;
-  width: 600px;
-  box-shadow: 0 0 5px 1px black;
-  border-radius: 15px;
-  margin: auto;
-  form {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    padding: 30px 0;
-    width: 100%;
+export const StyledForm = styled.main``;
 
-    * {
-      font-family: "Oswald", sans-serif;
-    }
-  }
-`;
 export const StyledField = styled.div`
   display: flex;
   justify-content: center;
@@ -44,12 +27,24 @@ export const StyledField = styled.div`
   }
   textarea {
     outline: none;
-    font-family: "Oswald", sans-serif;
     font-weight: 400;
   }
   button {
     width: 200px;
     height: 50px;
+    border-radius: 10px;
+  }
+
+  input::file-selector-button {
+    font-weight: bold;
+    font-size: 1.1em;
+    height: 30px;
+    width: 100px;
+    border: none;
+    border-radius: 10px;
+  }
+  button[type="submit"] {
+    border: none;
     border-radius: 10px;
   }
 `;
@@ -95,4 +90,18 @@ export const OptionIgreja = styled.div`
   display: flex;
   justify-content: center;
   flex-flow: column;
+`;
+
+export const StyledType = styled.div`
+  label {
+    display: inline;
+  }
+`;
+
+export const StyledOption = styled.div`
+  margin: 10px 5px;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
