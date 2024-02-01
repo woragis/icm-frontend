@@ -9,6 +9,7 @@ const GlobalStyles = createGlobalStyle`
     font-family: "Oswald", sans-serif;
     text-decoration: none;
     transition: width 500ms;
+    color: ${(props) => props.theme.color.lightNeutral};
   }
 
 
