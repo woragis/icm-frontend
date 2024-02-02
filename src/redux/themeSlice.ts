@@ -25,11 +25,9 @@ const themeSlice = createSlice({
   reducers: {
     toggleManualTheme: (state) => {
       if (state.theme === "light") {
-        console.log(state);
         localStorage.setItem("theme", "dark");
         state.theme = "dark";
       } else if (state.theme === "dark") {
-        console.log(state);
         localStorage.setItem("theme", "light");
         state.theme = "light";
       }

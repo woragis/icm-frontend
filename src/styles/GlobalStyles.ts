@@ -8,8 +8,12 @@ const GlobalStyles = createGlobalStyle`
 
     font-family: "Oswald", sans-serif;
     text-decoration: none;
-    transition: width 500ms;
+    transition: 500ms;
     color: ${(props) => props.theme.color.lightNeutral};
+  }
+
+  body {
+    overflow-x: hidden;
   }
 
 
@@ -55,9 +59,14 @@ const GlobalStyles = createGlobalStyle`
     }
   }
 
-  .login-element, .register-element {
+  .contrib-element, .login-element, .register-element, .report-element {
     transition: 1s;
     color: ${(props) => props.theme.color.lightPrimary};
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    width: 80%;
+    margin: 5px 0;
 
     label {
       text-align: center;
@@ -80,19 +89,21 @@ const GlobalStyles = createGlobalStyle`
         transition: 500ms;
       }
     }
-    input {
+    input, button, textarea, select {
       outline: none;
       height: 60px;
       font-size: 1.5em;
       border-radius: 10px;
       padding: 8px;
       text-align: center;
+      background-color: ${(props) => props.theme.color.darkNeutral};
+      border: none;
     }
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
-    width: 80%;
-    margin: 5px 0;
+    textarea {
+      height: 120px;
+      font-size: 1em;
+      text-align: left;
+    }
 
     .show-password {
       font-size: 0.9em;
@@ -100,7 +111,7 @@ const GlobalStyles = createGlobalStyle`
     }
     &:focus-within {
       *::after {
-        width: 360px;
+        width: 70%;
       }
     }
   }
