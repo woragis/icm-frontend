@@ -1,5 +1,8 @@
 import { ChangeEvent, FC, FormEvent, useState } from "react";
 import styled from "styled-components";
+import { animated, useSpring } from "@react-spring/web";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 const StyledRegisterForm = styled.main`
   form {
@@ -22,9 +25,6 @@ const Register: FC = () => {
     {} as RegisterDataInterface
   );
   const [showPassword, setShowPassword] = useState<boolean>(false);
-
-  const emailPlaceholder = "Seu email";
-  const passwordPlaceholder = "Sua senha";
 
   const togglePassword = () => {
     setShowPassword((prevState) => !prevState);
@@ -53,15 +53,28 @@ const Register: FC = () => {
     registerData.name.length > 10 &&
     registerData.whatsapp &&
     registerData.whatsapp.length >= 11;
+
+  const namePlaceholder = "Joao da Silva da Silva";
+  const whatsappPlaceholder = "(XX) 9XXXX-XXXX";
+  const emailPlaceholder = "nome@email.com";
+  const passwordPlaceholder = "senha super secreta";
+
+  const pageTransition = useSelector(
+    (state: RootState) => state.pageTranisition
+  );
+  const pageProps = useSpring(pageTransition);
+
   return (
-    <StyledRegisterForm>
+    <animated.main style={pageProps}>
       <form onSubmit={(e) => registerSubmit(e)}>
+        <h1>Registrar-se</h1>
         <div className="register-element">
           <label htmlFor="name">Nome</label>
           <input
             type="text"
             name="name"
             id="name"
+            placeholder={namePlaceholder}
             onChange={(e) => handleRegisterDataChange(e)}
             disabled={registered}
           />
@@ -72,6 +85,7 @@ const Register: FC = () => {
             type="number"
             name="whatsapp"
             id="whatsapp"
+            placeholder={whatsappPlaceholder}
             onChange={(e) => handleRegisterDataChange(e)}
             disabled={registered}
           />
@@ -131,7 +145,7 @@ const Register: FC = () => {
           </>
         )}
       </form>
-    </StyledRegisterForm>
+    </animated.main>
   );
 };
 

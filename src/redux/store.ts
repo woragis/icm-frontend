@@ -2,12 +2,14 @@ import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import registerReducer from "./register/registerSlice";
 import loginReducer from "./login/loginSlice";
 import themeReducer from "./themeSlice";
+import pageReducer from "./pageSlice";
 
 export const store = configureStore({
   reducer: {
     register: registerReducer,
     login: loginReducer,
     theme: themeReducer,
+    pageTranisition: pageReducer,
   },
 });
 

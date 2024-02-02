@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState, useTransition } from "react";
 import {
   StyledForm,
   StyledField,
@@ -10,6 +10,9 @@ import {
   StyledType,
   StyledOption,
 } from "./style";
+import { animated, useSpring } from "@react-spring/web";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 const Contrib = () => {
   interface IStates {
@@ -244,10 +247,16 @@ const Contrib = () => {
     console.log(`New Value: ${event.target.value}`);
   };
 
+  const pageTransitions = useSelector(
+    (state: RootState) => state.pageTranisition
+  );
+  const pageProps = useSpring(pageTransitions);
+
   return (
-    <StyledForm>
+    <animated.main style={pageProps}>
       <form>
-        <StyledField>
+        <h1>Enviar Contribuicao</h1>
+        <StyledField className="contrib-element">
           <label htmlFor="name">Nome Completo</label>
           <input
             type="text"
@@ -259,12 +268,14 @@ const Contrib = () => {
           />
         </StyledField>
         <StyledLocation>
-          <OptionState className="state">
-            <label htmlFor="state">Estado</label>
-            <select name="state" id="state">
-              {stateOptions}
-            </select>
-          </OptionState>
+          {false && (
+            <OptionState className="state">
+              <label htmlFor="state">Estado</label>
+              <select name="state" id="state">
+                {stateOptions}
+              </select>
+            </OptionState>
+          )}
           <OptionCity className="city">
             <label htmlFor="city">Cidade</label>
             <select name="city" id="city">
@@ -286,7 +297,7 @@ const Contrib = () => {
             </select>
           </OptionIgreja>
         </StyledLocation>
-        <StyledType>
+        <StyledType className="contrib-element">
           <StyledOption onClick={() => ToggleContribType("text")}>
             <label htmlFor="texto">Contribuicao de Texto</label>
             <input
@@ -309,7 +320,7 @@ const Contrib = () => {
           </StyledOption>
         </StyledType>
         {contribType === "text" && (
-          <StyledField>
+          <StyledField className="contrib-element">
             <label htmlFor="contrib">Contribuicao escrita</label>
             <textarea
               name="contrib"
@@ -322,7 +333,7 @@ const Contrib = () => {
           </StyledField>
         )}
         {contribType === "video" && (
-          <StyledField>
+          <StyledField className="contrib-element">
             <label htmlFor="contrib">Contribuicao em Video</label>
             <input type="file" name="contrib" id="contrib" />
           </StyledField>
@@ -331,7 +342,7 @@ const Contrib = () => {
           <button type="submit">Enviar Contribuicao</button>
         </StyledField>
       </form>
-    </StyledForm>
+    </animated.main>
   );
 };
 

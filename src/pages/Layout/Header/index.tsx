@@ -15,6 +15,7 @@ import { RootState } from "../../../redux/store";
 import { useState } from "react";
 import { FaSearchengin } from "react-icons/fa6";
 import { MdLightMode, MdDarkMode } from "react-icons/md";
+import { animated, useSpring, useSpringRef } from "@react-spring/web";
 
 const Header = () => {
   interface INavLinks {
@@ -26,6 +27,7 @@ const Header = () => {
     { name: "Contato", path: "/report" },
     { name: "Registrar", path: "/register" },
     { name: "Login", path: "/login" },
+    { name: "Perfil", path: "/profile" },
   ];
   const navLinksComponent = navLinks.map(({ name, path }: INavLinks) => {
     return (
@@ -60,30 +62,39 @@ const Header = () => {
     }
   };
 
+  const defaultWidth = window.innerWidth;
+  const springs = useSpring({
+    from: { x: -defaultWidth / 5 },
+    to: { x: defaultWidth },
+    loop: true,
+    config: { duration: 50000 },
+  });
+
   return (
     <StyledHeader>
-      <Link to={"/"}>
-        <StyledLogo
-          className="logo"
-          version="1.0"
-          xmlns="http://www.w3.org/2000/svg"
-          width="900.000000pt"
-          height="275.000000pt"
-          viewBox="0 0 900.000000 275.000000"
-          preserveAspectRatio="xMidYMid meet"
-        >
-          <g
-            transform="translate(0.000000,275.000000) scale(0.100000,-0.100000)"
-            stroke="none"
+      <div className="header-logo">
+        <Link to={"/"}>
+          <StyledLogo
+            className="logo"
+            version="1.0"
+            xmlns="http://www.w3.org/2000/svg"
+            width="900.000000pt"
+            height="275.000000pt"
+            viewBox="0 0 900.000000 275.000000"
+            preserveAspectRatio="xMidYMid meet"
           >
-            <path
-              d="M1585 2344 c-11 -2 -45 -9 -75 -15 -50 -10 -150 -53 -150 -64 0 -2
+            <g
+              transform="translate(0.000000,275.000000) scale(0.100000,-0.100000)"
+              stroke="none"
+            >
+              <path
+                d="M1585 2344 c-11 -2 -45 -9 -75 -15 -50 -10 -150 -53 -150 -64 0 -2
 35 -2 78 2 68 5 80 3 102 -15 49 -40 27 -123 -66 -243 -24 -32 -44 -60 -44
 -63 0 -30 159 82 231 162 52 59 93 144 85 177 -4 14 -16 31 -29 39 -24 15
 -100 26 -132 20z"
-            />
-            <path
-              d="M1311 1855 c-52 -44 -294 -366 -469 -625 -113 -165 -301 -417 -380
+              />
+              <path
+                d="M1311 1855 c-52 -44 -294 -366 -469 -625 -113 -165 -301 -417 -380
 -508 -57 -65 -63 -76 -50 -89 13 -13 22 -7 72 49 78 85 247 309 349 461 l84
 124 6 -142 c8 -180 28 -278 77 -383 67 -140 184 -237 337 -277 93 -25 259 -21
 374 9 163 41 316 114 427 204 58 47 278 271 507 516 142 151 183 179 264 179
@@ -104,11 +115,13 @@ const Header = () => {
 -326 283 -106 -9 -183 -63 -336 -236 -302 -340 -492 -523 -627 -600 -128 -73
 -302 -103 -447 -78 -283 49 -466 264 -468 551 -2 209 70 381 243 583 103 119
 118 154 74 160 -12 2 -35 -9 -53 -23z"
-            />
-          </g>
-        </StyledLogo>
-        Contribuicoes
-      </Link>
+              />
+            </g>
+          </StyledLogo>
+          <p>Contribuicoes</p>
+        </Link>
+      </div>
+
       <StyledNavLinks className="links">
         {navLinksComponent}
         <StyledNavTheme>

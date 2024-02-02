@@ -5,6 +5,10 @@ import {
   StyledLoginForm,
   StyledPasswordElement,
 } from "./style";
+import { animated } from "@react-spring/web";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { useSpring } from "@react-spring/web";
 
 const Login = () => {
   const [loginData, setLoginData] = useState({
@@ -20,8 +24,8 @@ const Login = () => {
     setLoginData({ ...loginData, [event.target.name]: event.target.value });
   };
 
-  const emailPlaceholder = "Seu email";
-  const passwordPlaceholder = "Sua senha";
+  const emailPlaceholder = "nome@email.com";
+  const passwordPlaceholder = "senha super secreta";
 
   const handleSubmit = (event: FormEvent) => {
     console.log(
@@ -33,9 +37,15 @@ const Login = () => {
     event.preventDefault();
   };
 
+  const pageTransition = useSelector(
+    (state: RootState) => state.pageTranisition
+  );
+  const pageProps = useSpring(pageTransition);
+
   return (
-    <StyledLogin>
+    <animated.main style={pageProps}>
       <StyledLoginForm onSubmit={(e) => handleSubmit(e)}>
+        <h1>Logar-se</h1>
         <StyledLoginElement className="login-element">
           <label htmlFor="email">Email</label>
           <input
@@ -66,12 +76,13 @@ const Login = () => {
             />
           </StyledPasswordElement>
         </StyledLoginElement>
-
-        <button type="submit" onSubmit={(e) => handleSubmit(e)}>
-          Login
-        </button>
+        <div className="login-element">
+          <button type="submit" onSubmit={(e) => handleSubmit(e)}>
+            Login
+          </button>
+        </div>
       </StyledLoginForm>
-    </StyledLogin>
+    </animated.main>
   );
 };
 
