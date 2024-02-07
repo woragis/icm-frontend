@@ -6,8 +6,8 @@ export const StyledFooter = styled.footer`
   justify-items: center;
   align-items: center;
   height: 120px;
-  color: ${(props) => props.theme.color.normalNeutral};
-  background-color: ${(props) => props.theme.color.darkNeutral};
+  color: ${(props) => props.theme.color.footer.text};
+  background-color: ${(props) => props.theme.color.footer.background};
 `;
 
 export const FooterSection = styled.section`
