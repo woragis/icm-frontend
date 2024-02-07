@@ -1,0 +1,12 @@
+{
+  "files": {
+    "main.js": "/icm-frontend/static/js/main.7431dd9b.js",
+    "static/js/787.9e9f4ffd.chunk.js": "/icm-frontend/static/js/787.9e9f4ffd.chunk.js",
+    "index.html": "/icm-frontend/index.html",
+    "main.7431dd9b.js.map": "/icm-frontend/static/js/main.7431dd9b.js.map",
+    "787.9e9f4ffd.chunk.js.map": "/icm-frontend/static/js/787.9e9f4ffd.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.7431dd9b.js"
+  ]
+}
