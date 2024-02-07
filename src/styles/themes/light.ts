@@ -1,5 +1,17 @@
 const theme = {
   color: {
+    header: {
+      background: "#EDF2F4",
+      logo: "#D80032",
+      links: "#D80032",
+      shadow: "#8D99AE",
+      hover: "#2B2D42",
+    },
+    main: "#D80032",
+    text: "#2B2D42",
+    shadow: "#8D99AE",
+    background: "#EDF2F4",
+    secondary: "#EF233C",
     // done
     normalPrimary: "#BB1626",
     lightPrimary: "#EA4859",
@@ -21,12 +33,23 @@ const theme = {
     lightAccent: "#FFDE85",
     darkAccent: "#F5B400",
 
-    background: "#EFE6DD",
+    form: {
+      border: "#EA4859",
+      label: {
+        color: "#000",
+      },
+    },
   },
   shadow: {
-    big: "0",
-    medium: "0",
-    small: "0",
+    size: {
+      big: "200px",
+      medium: "50px",
+      small: "10px",
+    },
+    color: {
+      main: "#000",
+      neon: "normal",
+    },
   },
   metrics: {
     form: {

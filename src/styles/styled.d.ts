@@ -9,6 +9,19 @@ declare module "styled-components" {
           color: string;
         };
       };
+      header: {
+        background: string;
+        logo: string;
+        links: string;
+        shadow: string;
+        hover: string;
+      };
+
+      main: string;
+      text: string;
+      shadow: string;
+      background: string;
+      secondary: string;
       normalPrimary: string;
       lightPrimary: string;
       darkPrimary: string;
@@ -24,8 +37,6 @@ declare module "styled-components" {
       normalAccent: string;
       lightAccent: string;
       darkAccent: string;
-
-      background: string;
     };
     shadow: {
       size: {

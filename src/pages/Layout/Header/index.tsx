@@ -1,21 +1,13 @@
 import { Link } from "react-router-dom";
-import {
-  StyledHeader,
-  StyledNavLinks,
-  StyledLogo,
-  StyledNavTheme,
-} from "./style";
+import { StyledHeader, StyledNavLinks, StyledLogo, StyledNavTheme, MobileNav, Logo, ThemeList, ThemeButton, Theme, ThemeTitle } from "./style";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setAutomaticTheme,
-  setManualTheme,
-  toggleManualTheme,
-} from "../../../redux/themeSlice";
+import { setTheme } from "../../../redux/themeSlice";
 import { RootState } from "../../../redux/store";
 import { useState } from "react";
-import { FaSearchengin } from "react-icons/fa6";
 import { MdLightMode, MdDarkMode } from "react-icons/md";
-import { animated, useSpring, useSpringRef } from "@react-spring/web";
+import { useSpring } from "@react-spring/web";
+import { FiAlignRight, FiX } from "react-icons/fi";
+import { FaCog } from "react-icons/fa";
 
 const Header = () => {
   interface INavLinks {
@@ -40,28 +32,6 @@ const Header = () => {
 
   const theme = useSelector((state: RootState) => state.theme.theme);
 
-  const switchCurrentTheme = () => {
-    dispatch(toggleManualTheme());
-  };
-
-  const [automatic, setAutomatic] = useState(
-    theme === "automatic" ? true : false
-  );
-  const [manual, setManual] = useState(
-    theme === "light" || theme === "dark" ? true : false
-  );
-  const handleThemeChange = () => {
-    if (automatic) {
-      setAutomatic((prevState) => !prevState);
-      setManual((prevState) => !prevState);
-      dispatch(setManualTheme());
-    } else if (manual) {
-      setAutomatic((prevState) => !prevState);
-      setManual((prevState) => !prevState);
-      dispatch(setAutomaticTheme());
-    }
-  };
-
   const defaultWidth = window.innerWidth;
   const springs = useSpring({
     from: { x: -defaultWidth / 5 },
@@ -69,13 +39,25 @@ const Header = () => {
     loop: true,
     config: { duration: 50000 },
   });
-
+  const [showMobileNav, setShowMobileNav] = useState<boolean>(false);
+  const handleMobileNav = () => {
+    setShowMobileNav((prevState) => !prevState);
+  };
+  const [showThemeOptions, setShowThemeOptions] = useState<boolean>(false);
+  const toggleThemeNav = () => {
+    setShowThemeOptions((prevState) => !prevState);
+  };
+  const handleThemeChange = (theme: string) => {
+    if (theme === "automatic") dispatch(setTheme({ theme: "automatic" }));
+    else if (theme === "light") dispatch(setTheme({ theme: "light" }));
+    else if (theme === "dark") dispatch(setTheme({ theme: "dark" }));
+    else if (theme === "neonDark") dispatch(setTheme({ theme: "neonDark" }));
+  };
   return (
     <StyledHeader>
-      <div className="header-logo">
+      <Logo>
         <Link to={"/"}>
           <StyledLogo
-            className="logo"
             version="1.0"
             xmlns="http://www.w3.org/2000/svg"
             width="900.000000pt"
@@ -83,10 +65,7 @@ const Header = () => {
             viewBox="0 0 900.000000 275.000000"
             preserveAspectRatio="xMidYMid meet"
           >
-            <g
-              transform="translate(0.000000,275.000000) scale(0.100000,-0.100000)"
-              stroke="none"
-            >
+            <g transform="translate(0.000000,275.000000) scale(0.100000,-0.100000)" stroke="none">
               <path
                 d="M1585 2344 c-11 -2 -45 -9 -75 -15 -50 -10 -150 -53 -150 -64 0 -2
 35 -2 78 2 68 5 80 3 102 -15 49 -40 27 -123 -66 -243 -24 -32 -44 -60 -44
@@ -118,56 +97,34 @@ const Header = () => {
               />
             </g>
           </StyledLogo>
-          <p>Contribuicoes</p>
         </Link>
-      </div>
-
-      <StyledNavLinks className="links">
+      </Logo>
+      <MobileNav onClick={handleMobileNav}>{showMobileNav ? <FiX /> : <FiAlignRight />}</MobileNav>
+      <StyledNavLinks show={showMobileNav} onClick={handleMobileNav}>
         {navLinksComponent}
-        <StyledNavTheme>
-          <label htmlFor="automatic">Automatic</label>
-          <input
-            type="radio"
-            name="theme-control"
-            id="automatic"
-            onChange={handleThemeChange}
-            checked={automatic}
-          />
-          <label htmlFor="manual">Manual</label>
-          <input
-            type="radio"
-            name="theme-control"
-            id="manual"
-            onChange={handleThemeChange}
-            checked={manual}
-          />
-          <br />
-          <label htmlFor="theme-switch" onClick={switchCurrentTheme}>
-            {theme === "light" && <MdLightMode />}
-            {theme === "automatic" &&
-              window.matchMedia("(prefers-color-scheme: light)").matches && (
-                <MdLightMode />
-              )}
-            {theme === "dark" && <MdDarkMode />}
-            {theme === "automatic" &&
-              window.matchMedia("(prefers-color-scheme: dark)").matches && (
-                <MdDarkMode />
-              )}
-          </label>
-          <input
-            type="checkbox"
-            name="theme-switch"
-            id="theme-switcher"
-            onClick={switchCurrentTheme}
-            checked={
-              theme === "light" ||
-              (theme === "automatic" &&
-                window.matchMedia("(prefers-color-scheme: light)").matches)
-                ? false
-                : true
-            }
-            disabled={automatic}
-          />
+        <StyledNavTheme show={showThemeOptions}>
+          <ThemeButton>
+            <MdLightMode onClick={toggleThemeNav} />
+            <ThemeTitle onClick={toggleThemeNav}>Tema</ThemeTitle>
+          </ThemeButton>
+          <ThemeList show={showThemeOptions}>
+            <Theme onClick={() => handleThemeChange("automatic")}>
+              <FaCog />
+              Automatic
+            </Theme>
+            <Theme onClick={() => handleThemeChange("light")}>
+              <MdLightMode />
+              Light
+            </Theme>
+            <Theme onClick={() => handleThemeChange("dark")}>
+              <MdDarkMode />
+              Dark
+            </Theme>
+            <Theme onClick={() => handleThemeChange("neonDark")}>
+              <MdDarkMode />
+              Neon Dark
+            </Theme>
+          </ThemeList>
         </StyledNavTheme>
       </StyledNavLinks>
     </StyledHeader>
