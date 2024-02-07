@@ -5,10 +5,14 @@ declare module "styled-components" {
     color: {
       form: {
         border: string;
-        label: {
-          color: string;
+        label: string;
+        background: string;
+        input: {
+          text: string;
+          background: string;
         };
       };
+
       header: {
         background: string;
         logo: string;

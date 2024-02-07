@@ -1,5 +1,5 @@
 import styled, { createGlobalStyle } from "styled-components";
-import { shade } from "polished";
+import { shade, transparentize } from "polished";
 import { animated } from "@react-spring/web";
 
 const GlobalStyles = createGlobalStyle`
@@ -19,20 +19,19 @@ const GlobalStyles = createGlobalStyle`
     overflow-x: hidden;
   }
 `;
+
 export const Form = styled.form`
-  width: 600px;
-  min-height: 300px;
-  margin: 30px;
+  width: 800px;
+  min-height: 720px;
   padding: 30px 0;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  color: white;
   border: 3px solid ${(props) => props.theme.color.form.border};
-  border-radius: 10px;
-  background-color: transparent;
-  box-shadow: ${(props) => props.theme.shadow.color.neon} 0 0 ${(props) => props.theme.shadow.size.medium} ${(props) => props.theme.color.lightPrimary};
+  border-radius: 0px;
+  background-color: ${(props) => props.theme.color.form.background};
+  /* box-shadow: ${(props) => props.theme.shadow.color.neon} 0 0 ${(props) => props.theme.shadow.size.medium} ${(props) => props.theme.color.lightPrimary}; */
   position: relative;
   z-index: 2;
 
@@ -44,8 +43,13 @@ export const Form = styled.form`
     border: 3px solid transparent;
     border-radius: 10px;
     background: transparent;
-    box-shadow: 0 0 ${(props) => props.theme.shadow.size.medium} ${(props) => props.theme.shadow.color.main};
+    /* box-shadow: 0 0 ${(props) => props.theme.shadow.size.medium} ${(props) => props.theme.shadow.color.main}; */
     z-index: -1;
+  }
+
+  @media screen and (max-width: 600px) {
+    width: 100%;
+    margin: 0;
   }
 `;
 
@@ -55,35 +59,40 @@ export const Field = styled.article`
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
-  width: 80%;
+  width: 480px;
   margin: 5px 0;
+
+  @media screen and (max-width: 600px) {
+    width: 100%;
+    padding: 0 20px;
+  }
 
   &:focus-within {
     *::before {
       width: 360px;
     }
   }
+`;
 
-  .available-email {
-    background-color: ${(props) => props.theme.color.darkNeutral};
-    height: 60px;
-    font-size: 1.5em;
-    border-radius: 10px;
-    padding: 8px;
-    text-align: center;
-    border: none;
-    outline: none;
-    font-style: italic;
-    font-weight: normal;
-    color: ${(props) => shade(0.3, props.theme.color.lightNeutral)};
-  }
+export const DefinedInput: any = styled.p`
+  background-color: ${(props) => props.theme.color.form.input.background};
+  height: 60px;
+  font-size: 1.5em;
+  border-radius: 10px;
+  padding: 8px;
+  text-align: center;
+  border: none;
+  outline: none;
+  font-style: italic;
+  font-weight: normal;
+  color: ${(props) => transparentize(0.5, props.theme.color.form.input.text)};
 `;
 
 export const Label = styled.label`
   text-align: center;
-  color: ${(props) => props.theme.color.form.label.color};
+  color: ${(props) => props.theme.color.form.label};
   font-size: 1.4em;
-  font-weight: 700;
+  font-weight: normal;
   margin: 5px 0;
   position: relative;
 
@@ -108,7 +117,8 @@ export const Input = styled.input`
   border-radius: 10px;
   padding: 8px;
   text-align: center;
-  background-color: ${(props) => props.theme.color.darkNeutral};
+  background-color: ${(props) => props.theme.color.form.input.background};
+  color: ${(props) => props.theme.color.form.input.text};
   border: none;
 `;
 
@@ -119,15 +129,57 @@ export const Button = styled.button`
   border-radius: 10px;
   padding: 8px;
   text-align: center;
-  background-color: ${(props) => props.theme.color.darkNeutral};
+  background-color: ${(props) => props.theme.color.form.input.background};
+  color: ${(props) => props.theme.color.form.input.text};
   border: none;
+  position: relative;
+  overflow: hidden;
+
+  span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: ${(props) => props.theme.color.form.input.background};
+    z-index: -1;
+    transition: 300ms ease-in-out;
+  }
+  &:hover {
+    cursor: pointer;
+    &::before {
+      width: 250%;
+      height: 500px;
+    }
+    span {
+      z-index: 2;
+    }
+  }
+  &:active {
+    background-color: ${(props) => shade(0.2, props.theme.color.form.input.text)};
+    &::before {
+      width: 0;
+    }
+  }
+  &::before {
+    content: "";
+    position: absolute;
+    background-color: ${(props) => props.theme.color.form.input.text};
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    width: 0px;
+    height: 800px;
+    transition: 200ms ease-in-out;
+    z-index: 1;
+  }
 `;
 
 export const TextArea = styled.textarea`
   outline: none;
   border-radius: 10px;
   padding: 8px;
-  background-color: ${(props) => props.theme.color.darkNeutral};
+  background-color: ${(props) => props.theme.color.form.input.background};
+  color: ${(props) => props.theme.color.form.input.text};
   border: none;
   height: 120px;
   font-size: 1em;
@@ -138,19 +190,21 @@ export const Select = styled.select`
   outline: none;
   height: 60px;
   font-size: 1.5em;
+  font-weight: normal;
   border-radius: 10px;
   padding: 8px;
   text-align: center;
-  background-color: ${(props) => props.theme.color.darkNeutral};
+  background-color: ${(props) => props.theme.color.form.input.background};
+  color: ${(props) => props.theme.color.form.input.text};
   border: none;
 `;
 
 export const Title = styled.h1`
-  color: ${(props) => props.theme.color.form.label.color};
+  color: ${(props) => props.theme.color.form.label};
 `;
 
 export const Description = styled.h2`
-  color: ${(props) => props.theme.color.form.label.color};
+  color: ${(props) => props.theme.color.form.label};
 `;
 
 export const Main = styled(animated.main)`
@@ -162,11 +216,11 @@ export const Main = styled(animated.main)`
 `;
 
 export const FormDialog = styled.figure`
-  font-size: 0.6em;
+  font-size: 0.9em;
   text-align: center;
   position: absolute;
-  top: -60px;
-  left: 50%;
+  top: 20%;
+  left: 100%;
   transform: translate(-50%, 0);
   background-color: ${(props) => props.theme.color.darkNeutral};
   border: yellow 1px solid;
@@ -187,7 +241,7 @@ export const AlertDialog = styled.figure`
   font-size: 1em;
   text-align: center;
   position: absolute;
-  top: 60px;
+  top: 600px;
   left: 50%;
   transform: translate(-50%, 0);
   background-color: ${(props) => props.theme.color.darkNeutral};
@@ -290,7 +344,7 @@ export const ShowPasswordSpan = styled.span`
     bottom: 5px;
     width: 10px;
     height: 30px;
-    border: solid ${(props) => props.theme.shadow.color.main};
+    border: solid ${(props) => props.theme.color.form.background};
     border-width: 0 3px 3px 0;
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
@@ -300,11 +354,11 @@ export const ShowPasswordSpan = styled.span`
 
 export const CheckEmail = styled.figure`
   position: relative;
-  width: 80%;
+  width: 470px;
   * {
     position: absolute;
     left: 10px;
-    top: -48px;
+    top: -47px;
     font-size: 1.5em;
   }
   #ban {
