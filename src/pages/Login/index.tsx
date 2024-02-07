@@ -4,7 +4,21 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { useSpring } from "@react-spring/web";
 import { LuAlertTriangle } from "react-icons/lu";
-import { Form, Field, Label, Main, Input, Button, Description, Title, Password, ShowPassword, ShowPasswordSpan, FormDialog } from "../../styles/GlobalStyles";
+import {
+  Form,
+  Field,
+  Label,
+  Main,
+  Input,
+  Button,
+  Description,
+  Title,
+  Password,
+  ShowPassword,
+  ShowPasswordSpan,
+  FormDialog,
+  DefinedInput,
+} from "../../styles/GlobalStyles";
 
 const Login = () => {
   const [loginData, setLoginData] = useState({
@@ -103,25 +117,28 @@ const Login = () => {
         ) : (
           <Field>
             <Label htmlFor="email">Email</Label>
-            <Description className="available-email">{loginData.email}</Description>
+            <DefinedInput>{loginData.email}</DefinedInput>
           </Field>
         )}
         <Field>
+          {emailTested && (
+            <FormDialog id="message">
+              <LuAlertTriangle color="yellow" />
+              <br />
+              Aparentemente seu email nao existe no nosso banco de dados
+              <br />
+              <span>Registre-se ou tente outro email</span>
+            </FormDialog>
+          )}
           {!emailExists ? (
             <Button onClick={testEmailExsitance}>
-              Next
-              {emailTested && (
-                <FormDialog id="message">
-                  <LuAlertTriangle color="yellow" />
-                  <br />
-                  Aparentemente seu email nao existe no nosso banco de dados
-                  <br />
-                  <span>Registre-se ou tente outro email</span>
-                </FormDialog>
-              )}
+              Próximo
+              <span>Próximo</span>
             </Button>
           ) : (
-            <Button onClick={modifyEmail}>Modify Email</Button>
+            <Button onClick={modifyEmail}>
+              Modificar Email <span>Modificar Email</span>
+            </Button>
           )}
         </Field>
         {emailExists && (
@@ -147,6 +164,7 @@ const Login = () => {
             <Field>
               <Button type="submit" onSubmit={handleSubmit}>
                 Login
+                <span>Login</span>
               </Button>
             </Field>
           </>

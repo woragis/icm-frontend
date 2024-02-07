@@ -172,7 +172,8 @@ const Register: FC = () => {
         )}
         <Field>
           <Button type="submit" onClick={registerSubmit} disabled={unusedEmail && validPassword && validUser ? false : true}>
-            Register
+            Registrar
+            <span>Registrar</span>
           </Button>
         </Field>
         {registered && unusedEmail && validUser && <AlertDialog>Congrats Bitch</AlertDialog>}

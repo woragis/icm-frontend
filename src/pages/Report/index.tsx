@@ -1,15 +1,8 @@
 import { FormEvent } from "react";
-import {
-  StyledReport,
-  StyledReportForm,
-  StyledReportReason,
-  StyledReportMessageTitle,
-  StyledReportMessageBody,
-  StyledReportContact,
-} from "./style";
-import { animated, useSpring } from "@react-spring/web";
+import { useSpring } from "@react-spring/web";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import { Form, Field, Label, Button, Input, TextArea, Select, Main, Title, Description } from "../../styles/GlobalStyles";
 
 enum EnumMotivos {
   AddCidade = "Adicionar Cidade",
@@ -32,7 +25,6 @@ interface IReport {
   };
 }
 
-// eslint-disable-next-line
 const initialState: IReport = {
   reportData: {
     motivo: EnumMotivos.AddCidade,
@@ -69,74 +61,48 @@ const Report = () => {
   const emailPlaceholder = "nome@email.com";
   const whatsappPlaceholder = "(83) 9XXXX-XXXX";
 
-  const pageTransition = useSelector(
-    (state: RootState) => state.pageTranisition
-  );
+  const pageTransition = useSelector((state: RootState) => state.pageTranisition);
   const pageProps = useSpring(pageTransition);
 
   return (
-    <animated.main style={pageProps}>
-      <StyledReportForm onSubmit={(e) => sendReport(e)}>
-        <h1>Contato</h1>
-        <StyledReportReason className="report-element">
-          <label htmlFor="reason">Motivo</label>
-          <select name="reason" id="reason">
+    <Main style={pageProps}>
+      <Form onSubmit={sendReport}>
+        <Title>Contato</Title>
+        <Field>
+          <Label htmlFor="reason">Motivo</Label>
+          <Select name="reason" id="reason">
             <Motivos />
-          </select>
-        </StyledReportReason>
-        <StyledReportMessageTitle className="report-element">
-          <label htmlFor="rebort-title">Titulo da Mensagem</label>
-          <input
-            type="text"
-            name="report-title"
-            id="report-title"
-            placeholder={titlePlaceholder}
-          />
-        </StyledReportMessageTitle>
-        <section className="report-element">
-          <label htmlFor="report-body">Mensagem</label>
-          <textarea
-            name="report-body"
-            id="report-body"
-            placeholder={messagePlaceholder}
-          />
-        </section>
-        <h2 className="info">Dados para contato</h2>
-        <div className="report-element">
-          <label htmlFor="name">Seu Nome</label>
-          <input
-            type="text"
-            name="name"
-            id="name"
-            placeholder={namePlaceholder}
-          />
-        </div>
-        <div className="report-element">
-          <label htmlFor="email">Seu Email</label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            placeholder={emailPlaceholder}
-          />
-        </div>
-        <div className="report-element">
-          <label htmlFor="whatsapp">Seu Whatsapp</label>
-          <input
-            type="tel"
-            name="whatsapp"
-            id="whatsapp"
-            placeholder={whatsappPlaceholder}
-          />
-        </div>
-
-        <div className="report-element">
-          <button type="submit" onClick={(e) => sendReport(e)}>
+          </Select>
+        </Field>
+        <Field>
+          <Label htmlFor="rebort-title">Título da Mensagem</Label>
+          <Input type="text" name="report-title" id="report-title" placeholder={titlePlaceholder} />
+        </Field>
+        <Field>
+          <Label htmlFor="report-body">Mensagem</Label>
+          <TextArea name="report-body" id="report-body" placeholder={messagePlaceholder} />
+        </Field>
+        <Description className="info">Dados para contato</Description>
+        <Field>
+          <Label htmlFor="name">Seu Nome</Label>
+          <Input type="text" name="name" id="name" placeholder={namePlaceholder} />
+        </Field>
+        <Field>
+          <Label htmlFor="email">Seu Email</Label>
+          <Input type="email" name="email" id="email" placeholder={emailPlaceholder} />
+        </Field>
+        <Field>
+          <Label htmlFor="whatsapp">Seu Whatsapp</Label>
+          <Input type="tel" name="whatsapp" id="whatsapp" placeholder={whatsappPlaceholder} />
+        </Field>
+        <Field>
+          <Button type="submit" onClick={sendReport}>
             Enviar Mensagem
-          </button>
-        </div>
-      </StyledReportForm>
-    </animated.main>
+            <span>Enviar Mensagem</span>
+          </Button>
+        </Field>
+      </Form>
+    </Main>
   );
 };
 
