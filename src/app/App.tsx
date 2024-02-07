@@ -16,11 +16,9 @@ function App() {
         theme={
           theme === "light"
             ? light
-            : theme === "automatic" &&
-              window.matchMedia("(prefers-color-scheme: light)").matches
+            : theme === "automatic" && window.matchMedia("(prefers-color-scheme: light)").matches
             ? light
-            : theme === "automatic" &&
-              window.matchMedia("(prefers-color-scheme: dark)").matches
+            : theme === "automatic" && window.matchMedia("(prefers-color-scheme: dark)").matches
             ? dark
             : theme === "dark"
             ? dark
