@@ -1,14 +1,9 @@
-import { ChangeEvent, FC, FormEvent, useState } from "react";
-import styled from "styled-components";
-import { animated, useSpring } from "@react-spring/web";
+import { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
+import { useSpring } from "@react-spring/web";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-
-const StyledRegisterForm = styled.main`
-  form {
-    padding: 30px 0;
-  }
-`;
+import { SlBan, SlCheck } from "react-icons/sl";
+import { AlertDialog, Button, CheckEmail, Field, Form, Input, Label, Main, Password, ShowPassword, ShowPasswordSpan, Title } from "../../styles/GlobalStyles";
 
 interface RegisterDataInterface {
   name: string;
@@ -21,131 +16,168 @@ const Register: FC = () => {
   const [unusedEmail, setUnusedEmail] = useState<boolean>(false);
   const [registered, setRegistered] = useState<boolean>(false);
 
-  const [registerData, setRegisterData] = useState<RegisterDataInterface>(
-    {} as RegisterDataInterface
-  );
+  const [registerData, setRegisterData] = useState<RegisterDataInterface>({} as RegisterDataInterface);
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const togglePassword = () => {
     setShowPassword((prevState) => !prevState);
   };
-
+  const [checkEmailSeconds, setCheckEmailSeconds] = useState<number>(1);
   const handleRegisterDataChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.name == "email") setCheckEmailSeconds(2);
     setRegisterData({
       ...registerData,
       [event.target.name]: event.target.value,
     });
   };
 
-  const testEmail = (event: any) => {
-    event.preventDefault();
-    setUnusedEmail(true);
+  const testEmail = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/auth/test-email", {
+        method: "post",
+        cache: "default",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: registerData.email }),
+        credentials: "include",
+      });
+
+      const data = await response.json();
+
+      if (data.message === false) {
+        setUnusedEmail(true);
+      } else {
+        setUnusedEmail(false);
+      }
+    } catch (err) {
+      console.log("Error testing email " + err);
+    } finally {
+      setCheckingEmail(false);
+    }
   };
 
-  const registerSubmit = (event: FormEvent) => {
+  const registerSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    if (unusedEmail) setRegistered(true);
-    else if (!unusedEmail) setRegistered(false);
+    if (unusedEmail) {
+      try {
+        const response = await fetch("http://localhost:8080/auth/register", {
+          method: "post",
+          cache: "default",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(registerData),
+          credentials: "include",
+        });
+        const data = await response.json();
+
+        if (response.status === 201) {
+          alert("registered");
+          setRegistered(true);
+        } else {
+          alert("Error registering, status code: " + response.status);
+        }
+      } catch (err) {
+        console.log("Error submiting register form" + err);
+      }
+    } else if (!unusedEmail) setRegistered(false);
   };
 
-  let first =
-    registerData.name &&
-    registerData.name.length > 10 &&
-    registerData.whatsapp &&
-    registerData.whatsapp.length >= 11;
+  let validUser = registerData.name && registerData.name.length >= 8 && registerData.whatsapp && registerData.whatsapp.length >= 11;
+
+  let validPassword = registerData.password && registerData.password.length >= 8;
 
   const namePlaceholder = "Joao da Silva da Silva";
   const whatsappPlaceholder = "(XX) 9XXXX-XXXX";
   const emailPlaceholder = "nome@email.com";
   const passwordPlaceholder = "senha super secreta";
 
-  const pageTransition = useSelector(
-    (state: RootState) => state.pageTranisition
-  );
+  const pageTransition = useSelector((state: RootState) => state.pageTranisition);
   const pageProps = useSpring(pageTransition);
-
+  const [checkingEmail, setCheckingEmail] = useState<boolean>(false);
+  useEffect(() => {
+    const sleep = (ms: number) => {
+      return new Promise((resolve) => setTimeout(resolve, ms));
+    };
+    if (registerData.email && registerData.email.length >= 1 && checkEmailSeconds !== 0) {
+      sleep(checkEmailSeconds * 1000).then(() => {
+        console.log("checking email");
+        setCheckingEmail(true);
+        testEmail();
+        console.log("checked email");
+        setCheckEmailSeconds(0);
+      });
+    } else {
+      setCheckEmailSeconds(0);
+    }
+  }, [checkEmailSeconds]);
   return (
-    <animated.main style={pageProps}>
-      <form onSubmit={(e) => registerSubmit(e)}>
-        <h1>Registrar-se</h1>
-        <div className="register-element">
-          <label htmlFor="name">Nome</label>
-          <input
-            type="text"
-            name="name"
-            id="name"
-            placeholder={namePlaceholder}
-            onChange={(e) => handleRegisterDataChange(e)}
-            disabled={registered}
-          />
-        </div>
-        <div className="register-element">
-          <label htmlFor="whatsapp">Whatsapp</label>
-          <input
-            type="number"
-            name="whatsapp"
-            id="whatsapp"
-            placeholder={whatsappPlaceholder}
-            onChange={(e) => handleRegisterDataChange(e)}
-            disabled={registered}
-          />
-        </div>
-        {first && (
+    <Main style={pageProps}>
+      <Form onSubmit={registerSubmit}>
+        <Title>Registrar-se</Title>
+        <Field>
+          <Label htmlFor="name">Nome</Label>
+          <Input type="text" name="name" id="name" placeholder={namePlaceholder} onChange={handleRegisterDataChange} disabled={registered} />
+        </Field>
+        <CheckEmail>{!checkingEmail && registerData.name && registerData.name.length >= 8 ? <SlCheck id="check" /> : <SlBan id="ban" />}</CheckEmail>
+        <Field>
+          <Label htmlFor="whatsapp">Whatsapp</Label>
+          <Input type="number" name="whatsapp" id="whatsapp" placeholder={whatsappPlaceholder} onChange={handleRegisterDataChange} disabled={registered} />
+        </Field>
+        <CheckEmail>{registerData.whatsapp && registerData.whatsapp.length >= 11 ? <SlCheck id="check" /> : <SlBan id="ban" />}</CheckEmail>
+        {validUser && (
           <>
-            <div className="register-element">
-              <label htmlFor="email">Email</label>
-              <input
+            <Field>
+              <Label htmlFor="email">Email</Label>
+              <Input
                 type="email"
                 name="email"
                 value={registerData.email}
                 placeholder={emailPlaceholder}
-                onChange={(e) => handleRegisterDataChange(e)}
+                autoComplete="email"
+                onChange={handleRegisterDataChange}
                 disabled={registered}
               />
-            </div>
-            <button onClick={testEmail} disabled={registered}>
-              Test Email
-            </button>
-            <div className="register-element">
-              <label htmlFor="password">Senha</label>
-              <div className="password-input">
-                <input
+            </Field>
+            <CheckEmail>{unusedEmail ? <SlCheck id="check" /> : <SlBan id="ban" />}</CheckEmail>
+            <Field>
+              <Label htmlFor="password">Senha</Label>
+              <Password>
+                <Input
                   type={showPassword ? "text" : "password"}
                   name="password"
                   value={registerData.password}
                   placeholder={passwordPlaceholder}
+                  autoComplete="none"
                   id="password"
-                  onChange={(e) => handleRegisterDataChange(e)}
+                  onChange={handleRegisterDataChange}
                   disabled={unusedEmail && !registered ? false : true}
                 />
-                <input
-                  type="checkbox"
-                  name="show-password"
-                  id="show-password"
-                  checked={showPassword}
-                  onChange={togglePassword}
-                  disabled={unusedEmail && !registered ? false : true}
-                />
-              </div>
-            </div>
+                <ShowPassword>
+                  <Input
+                    type="checkbox"
+                    name="show-password"
+                    id="show-password"
+                    checked={showPassword}
+                    onChange={togglePassword}
+                    disabled={unusedEmail && !registered ? false : true}
+                  />
+                  <ShowPasswordSpan />
+                </ShowPassword>
+              </Password>
+            </Field>
+            <CheckEmail>{registerData.password && registerData.password.length >= 8 ? <SlCheck id="check" /> : <SlBan id="ban" />}</CheckEmail>
           </>
         )}
-        <div className="register-element">
-          <button
-            type="submit"
-            onClick={(e) => registerSubmit(e)}
-            disabled={unusedEmail && first ? false : true}
-          >
+        <Field>
+          <Button type="submit" onClick={registerSubmit} disabled={unusedEmail && validPassword && validUser ? false : true}>
             Register
-          </button>
-        </div>
-        {registered && unusedEmail && first && (
-          <>
-            <h1>Congratulations you are registered</h1>
-          </>
-        )}
-      </form>
-    </animated.main>
+          </Button>
+        </Field>
+        {registered && unusedEmail && validUser && <AlertDialog>Congrats Bitch</AlertDialog>}
+      </Form>
+    </Main>
   );
 };
 
