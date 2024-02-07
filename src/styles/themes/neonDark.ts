@@ -1,34 +1,31 @@
 const theme = {
   color: {
-    // done
-    normalPrimary: "#6E0D17",
-    lightPrimary: "#C91829",
-    darkPrimary: "#F07F8A",
-
-    // done
-    // colors: https://coolors.co/e69597-efbdbe-d85a5c-952325-cf3a3c-531314
-    normalSecondary: "#952325",
-    lightSecondary: "#CF3A3C",
-    darkSecondary: "#531314",
-
-    // it might be good if used correctly
-    normalNeutral: "#FDF0D5",
-    lightNeutral: "#EFE6DD",
-    darkNeutral: "#191919",
-
-    // done
-    normalAccent: "#E0A500",
-    lightAccent: "#FFCE47",
-    darkAccent: "#FFDE85",
-
-    background: "#000000",
-
+    header: {
+      background: "#080B0D",
+      logo: "#F50039",
+      links: "#F50039",
+      shadow: "#8D99AE",
+      hover: "#2B2D42",
+    },
+    footer: {
+      background: "#000000",
+      text: "#FFFFFF",
+    },
     form: {
-      border: "#F07F8A",
-      label: {
-        color: "#ffffff",
+      border: "#FFFFFF",
+      label: "#EDF2F4",
+      background: "#090909",
+      shadow: "#C91829",
+      input: {
+        text: "#EDF2F4",
+        background: "#090909",
       },
     },
+    main: "#F50039",
+    text: "#2B2D42",
+    shadow: "#8D99AE",
+    background: "#191919",
+    secondary: "#720915",
   },
   shadow: {
     size: {

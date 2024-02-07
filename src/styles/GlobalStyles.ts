@@ -1,4 +1,4 @@
-import styled, { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle, keyframes } from "styled-components";
 import { shade, transparentize } from "polished";
 import { animated } from "@react-spring/web";
 
@@ -11,12 +11,66 @@ const GlobalStyles = createGlobalStyle`
     font-family: "Oswald", sans-serif;
     text-decoration: none;
     transition: 500ms;
-    color: ${(props) => props.theme.color.lightNeutral};
+    color: ${(props) => props.theme.color.main};
     outline: none;
   }
 
   body {
     overflow-x: hidden;
+  }
+`;
+
+const NeonFormBorder = keyframes`
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(90deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  75% {
+    transform: rotate(270deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+`;
+
+export const FormBorder = styled.section`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 100%;
+  width: 810px;
+  background-color: ${(props) => props.theme.color.background};
+  z-index: 0;
+  /* box-shadow: 0 0 30px ${(props) => props.theme.color.form.shadow}; */
+  overflow: hidden;
+
+  // put limit here
+  &::before {
+    //put inside limit here (color)
+  }
+  &::after {
+    // put border here
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: -50%;
+    transform: translate(-50%, -50%);
+    height: 10%;
+    width: 200%;
+    background-color: ${(props) => props.theme.shadow.color.main};
+    box-shadow: 0 0 10px 100px ${(props) => props.theme.color.form.shadow};
+    animation-name: ${NeonFormBorder};
+    animation-duration: 5s;
+    animation-timing-function: linear;
+    animation-delay: 0ms;
+    animation-iteration-count: infinite;
+    z-index: -1;
   }
 `;
 
@@ -28,23 +82,17 @@ export const Form = styled.form`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  border: 3px solid ${(props) => props.theme.color.form.border};
+  border-style: solid;
+  border-width: 0 3px;
   border-radius: 0px;
-  background-color: ${(props) => props.theme.color.form.background};
-  /* box-shadow: ${(props) => props.theme.shadow.color.neon} 0 0 ${(props) => props.theme.shadow.size.medium} ${(props) => props.theme.color.lightPrimary}; */
+  border-color: ${(props) => props.theme.color.form.border};
+  background-color: ${(props) => props.theme.color.form};
+  box-shadow: ${(props) => props.theme.shadow.color.neon} 0 0 30px ${(props) => props.theme.color.form.shadow};
   position: relative;
-  z-index: 2;
+  z-index: 1;
+  overflow: hidden;
 
   &::before {
-    content: "";
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    border: 3px solid transparent;
-    border-radius: 10px;
-    background: transparent;
-    /* box-shadow: 0 0 ${(props) => props.theme.shadow.size.medium} ${(props) => props.theme.shadow.color.main}; */
-    z-index: -1;
   }
 
   @media screen and (max-width: 600px) {
@@ -55,7 +103,6 @@ export const Form = styled.form`
 
 export const Field = styled.article`
   transition: 1s;
-  color: ${(props) => props.theme.color.lightPrimary};
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
@@ -101,7 +148,7 @@ export const Label = styled.label`
     content: "";
     height: 1px;
     width: 100px;
-    background-color: ${(props) => props.theme.color.lightPrimary};
+    background-color: ${(props) => props.theme.color.form.label};
     bottom: 0;
     left: 50%;
     transform: translate(-50%, 0);
@@ -213,6 +260,7 @@ export const Main = styled(animated.main)`
   align-items: center;
   background-color: ${(props) => props.theme.color.background};
   min-height: 90vh;
+  overflow: hidden;
 `;
 
 export const FormDialog = styled.figure`
@@ -222,7 +270,7 @@ export const FormDialog = styled.figure`
   top: 20%;
   left: 100%;
   transform: translate(-50%, 0);
-  background-color: ${(props) => props.theme.color.darkNeutral};
+  background-color: ${(props) => props.theme.color.form.background};
   border: yellow 1px solid;
   height: auto;
   width: 350px;
@@ -244,8 +292,8 @@ export const AlertDialog = styled.figure`
   top: 600px;
   left: 50%;
   transform: translate(-50%, 0);
-  background-color: ${(props) => props.theme.color.darkNeutral};
-  border: ${(props) => props.theme.color.lightSecondary} 1px solid;
+  background-color: ${(props) => props.theme.color.form.background};
+  border: ${(props) => props.theme.color.form.border} 1px solid;
   height: auto;
   width: 350px;
   padding: 10px;
@@ -322,8 +370,8 @@ export const ShowPasswordSpan = styled.span`
   width: 25px;
   max-width: 25px;
   background-color: ${(props) => props.theme.color.background};
-  border: ${(props) => props.theme.color.lightSecondary} solid 2px;
-  box-shadow: ${(props) => props.theme.shadow.color.neon} 0 0 10px ${(props) => props.theme.color.lightPrimary};
+  border: ${(props) => props.theme.color.form.border} solid 2px;
+  box-shadow: ${(props) => props.theme.shadow.color.neon} 0 0 10px ${(props) => props.theme.color.form.shadow};
   border-radius: 3px;
   &::before {
     content: "";
@@ -332,7 +380,7 @@ export const ShowPasswordSpan = styled.span`
     max-width: 100%;
     width: 100%;
     border-radius: 3px;
-    box-shadow: 0 0 10px ${(props) => props.theme.color.lightPrimary};
+    box-shadow: 0 0 10px ${(props) => props.theme.color.form.shadow};
     top: 0;
     left: 0;
   }

@@ -7,6 +7,7 @@ declare module "styled-components" {
         border: string;
         label: string;
         background: string;
+        shadow: string;
         input: {
           text: string;
           background: string;
@@ -20,27 +21,16 @@ declare module "styled-components" {
         shadow: string;
         hover: string;
       };
+      footer: {
+        background: string;
+        text: string;
+      };
 
       main: string;
       text: string;
       shadow: string;
       background: string;
       secondary: string;
-      normalPrimary: string;
-      lightPrimary: string;
-      darkPrimary: string;
-
-      normalSecondary: string;
-      lightSecondary: string;
-      darkSecondary: string;
-
-      normalNeutral: string;
-      lightNeutral: string;
-      darkNeutral: string;
-
-      normalAccent: string;
-      lightAccent: string;
-      darkAccent: string;
     };
     shadow: {
       size: {
