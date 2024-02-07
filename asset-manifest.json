@@ -1,12 +1,12 @@
 {
   "files": {
-    "main.js": "/icm-frontend/static/js/main.7431dd9b.js",
-    "static/js/787.9e9f4ffd.chunk.js": "/icm-frontend/static/js/787.9e9f4ffd.chunk.js",
+    "main.js": "/icm-frontend/static/js/main.8cc5412c.js",
+    "static/js/787.774ffb29.chunk.js": "/icm-frontend/static/js/787.774ffb29.chunk.js",
     "index.html": "/icm-frontend/index.html",
-    "main.7431dd9b.js.map": "/icm-frontend/static/js/main.7431dd9b.js.map",
-    "787.9e9f4ffd.chunk.js.map": "/icm-frontend/static/js/787.9e9f4ffd.chunk.js.map"
+    "main.8cc5412c.js.map": "/icm-frontend/static/js/main.8cc5412c.js.map",
+    "787.774ffb29.chunk.js.map": "/icm-frontend/static/js/787.774ffb29.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/main.7431dd9b.js"
+    "static/js/main.8cc5412c.js"
   ]
 }
