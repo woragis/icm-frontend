@@ -216,7 +216,7 @@ export const Theme = styled.li`
   text-shadow: ${(props) => props.theme.color.header.shadow} 0px 0px 30px;
   font-size: 0.95em;
   padding: 0 5px;
-
+  cursor: pointer;
   display: grid;
   grid-template-columns: 25px 60px;
   align-items: center;
