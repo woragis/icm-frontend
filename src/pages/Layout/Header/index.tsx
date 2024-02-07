@@ -19,7 +19,7 @@ const Header = () => {
     { name: "Contato", path: "/report" },
     { name: "Registrar", path: "/register" },
     { name: "Login", path: "/login" },
-    { name: "Perfil", path: "/profile" },
+    // { name: "Perfil", path: "/profile" },
   ];
 
   const dispatch = useDispatch();

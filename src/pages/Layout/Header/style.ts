@@ -96,7 +96,7 @@ export const StyledNavLinks = styled.nav<NavProps>`
     color: ${(props) => props.theme.color.header.links};
 
     @media screen and (max-width: 1024px) {
-      color: ${(props) => props.theme.color.header.background};
+      color: ${(props) => shade(0.8, props.theme.color.header.hover)};
       text-shadow: ${(props) => props.theme.color.header.shadow} 0px 0px 30px;
       margin-bottom: 5px;
     }
@@ -114,7 +114,7 @@ export const MobileNav = styled.figure<ThemeProps>`
   }
   @media screen and (max-width: 1024px) {
     display: block;
-    position: absolute;
+    position: ${(props) => (props.show ? "fixed" : "absolute")};
     top: -4px;
     right: 10px;
     z-index: 20;
