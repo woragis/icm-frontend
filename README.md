@@ -1,65 +1,36 @@
-# Router
+## Todo
 
-## Pages Data
-
-## Install react-router-dom
-
-# Nav + Footer
-
-# Pages
-
-## Contact
-
-## Registro
-
-## Login
-
-## Contribuicoes
-
-### Falta
-
+- Responsive to 600px(phone) and 1024px(tablets)
+- Elements transitions
 - DefaultTheme = 'automatic'
-- Estilizar botoes
-- Criar um boilerplate de Estados e Cidades de cada estado
-- Criar logica para usar apenas cidades do estado especifico
-- Colorir mais
+- Tema claro minimalista
+- Tema escuro minimalista
+- Separar **neon dark** theme
+- Organizar cidades da paraiba por ondem de importancia (sem municipios)
+- Page Logic
+  1. Contribuicoes
+  2. Contato
 
-# Backend needs
+### Done
 
-## RESTful API QUERIES
+- Router (react-router-dom)
+- Pages Logic [login, register]
+- Page Layout (header + footer)
 
-### POST - Enviar Contribuicao / Link de Video
+## Backend todo
 
-- Google Drive API _para videos_
-- If User is logged in
-- 1. _Automatically sends to ICM - ES_
+- Contrib e Contato
+- Session
+- Perfil
+- Admin
+- Video Upload
+  1. Google drive api
+- Automatic
+  1. Send video/text to ICM - ES
+- Bot to confirm through email
+- Bot de email e de whatsapp (para contato)
+- Mudar informacoes de perfil (add cpf, mudar: senha, whatsapp, igreja)
 
-### POST - Login
+### Backend done
 
 - Test if email_exists
-- Session with session_id on cookies
-- Bot to confirm through email
-
-### POST - Register
-
-- Test if email_exists
-- Session with session_id on cookies
-- Bot to confirm through email
-
-### POST - Report
-
-- Bot de email e de whatsapp
-
-### GET - Profile
-
-#### PATCH/PUT - Add CPF
-
-- _(adding automatic contribution to ICM-ES)_
-- Bot to confirm through whatsapp
-
-#### PATCH/PUT - Modify password/whatsapp/igreja
-
-- Test Session
-- Bot to confirm through whatsapp
-
-### GET - IGREJA_DATA
