@@ -3,6 +3,12 @@ import "styled-components";
 declare module "styled-components" {
   export interface DefaultTheme {
     color: {
+      form: {
+        border: string;
+        label: {
+          color: string;
+        };
+      };
       normalPrimary: string;
       lightPrimary: string;
       darkPrimary: string;
@@ -22,9 +28,15 @@ declare module "styled-components" {
       background: string;
     };
     shadow: {
-      big: string;
-      medium: string;
-      small: string;
+      size: {
+        big: string;
+        medium: string;
+        small: string;
+      };
+      color: {
+        main: string;
+        neon: string;
+      };
     };
   }
 }
