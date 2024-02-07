@@ -18,26 +18,6 @@ const GlobalStyles = createGlobalStyle`
   body {
     overflow-x: hidden;
   }
-  .check-email {
-    position: relative;
-  width: 80%;
-  * {
-    position: absolute;
-    left: 10px;
-    top: -48px;
-    font-size: 1.5em;
-  }
-  #ban {
-    * {
-      color: red;
-    }
-  }
-  #check {
-    * {
-      color: green;
-    }
-  }
-  }
 `;
 export const Form = styled.form`
   width: 600px;
