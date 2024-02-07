@@ -21,13 +21,7 @@ const Header = () => {
     { name: "Login", path: "/login" },
     { name: "Perfil", path: "/profile" },
   ];
-  const navLinksComponent = navLinks.map(({ name, path }: INavLinks) => {
-    return (
-      <Link key={name} to={path}>
-        {name}
-      </Link>
-    );
-  });
+
   const dispatch = useDispatch();
 
   const theme = useSelector((state: RootState) => state.theme.theme);
@@ -47,6 +41,13 @@ const Header = () => {
   const toggleThemeNav = () => {
     setShowThemeOptions((prevState) => !prevState);
   };
+  const navLinksComponent = navLinks.map(({ name, path }: INavLinks) => {
+    return (
+      <Link key={name} to={path} onClick={handleMobileNav}>
+        {name}
+      </Link>
+    );
+  });
   const handleThemeChange = (theme: string) => {
     if (theme === "automatic") dispatch(setTheme({ theme: "automatic" }));
     else if (theme === "light") dispatch(setTheme({ theme: "light" }));
@@ -99,32 +100,45 @@ const Header = () => {
           </StyledLogo>
         </Link>
       </Logo>
-      <MobileNav onClick={handleMobileNav}>{showMobileNav ? <FiX /> : <FiAlignRight />}</MobileNav>
-      <StyledNavLinks show={showMobileNav} onClick={handleMobileNav}>
+      <MobileNav show={showMobileNav} onClick={handleMobileNav}>
+        {showMobileNav ? <FiX /> : <FiAlignRight />}
+      </MobileNav>
+      <StyledNavLinks show={showMobileNav}>
         {navLinksComponent}
         <StyledNavTheme show={showThemeOptions}>
           <ThemeButton>
-            <MdLightMode onClick={toggleThemeNav} />
+            {theme === "light" ? <MdLightMode onClick={toggleThemeNav} /> : theme === "automatic" ? <FaCog onClick={toggleThemeNav} /> : <MdDarkMode />}
             <ThemeTitle onClick={toggleThemeNav}>Tema</ThemeTitle>
+            <ThemeList show={showThemeOptions}>
+              <Theme
+                onClick={() => {
+                  handleThemeChange("automatic");
+                  toggleThemeNav();
+                }}
+              >
+                <FaCog />
+                Automatic
+              </Theme>
+              <Theme
+                onClick={() => {
+                  handleThemeChange("light");
+                  toggleThemeNav();
+                }}
+              >
+                <MdLightMode />
+                Light
+              </Theme>
+              <Theme
+                onClick={() => {
+                  handleThemeChange("dark");
+                  toggleThemeNav();
+                }}
+              >
+                <MdDarkMode />
+                Dark
+              </Theme>
+            </ThemeList>
           </ThemeButton>
-          <ThemeList show={showThemeOptions}>
-            <Theme onClick={() => handleThemeChange("automatic")}>
-              <FaCog />
-              Automatic
-            </Theme>
-            <Theme onClick={() => handleThemeChange("light")}>
-              <MdLightMode />
-              Light
-            </Theme>
-            <Theme onClick={() => handleThemeChange("dark")}>
-              <MdDarkMode />
-              Dark
-            </Theme>
-            <Theme onClick={() => handleThemeChange("neonDark")}>
-              <MdDarkMode />
-              Neon Dark
-            </Theme>
-          </ThemeList>
         </StyledNavTheme>
       </StyledNavLinks>
     </StyledHeader>

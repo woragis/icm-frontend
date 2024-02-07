@@ -39,15 +39,16 @@ const NeonFormBorder = keyframes`
 `;
 
 export const FormBorder = styled.section`
-  position: absolute;
+  /* position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   height: 100%;
-  width: 810px;
+  width: 500px;
   background-color: ${(props) => props.theme.color.background};
   z-index: 0;
   /* box-shadow: 0 0 30px ${(props) => props.theme.color.form.shadow}; */
+  /* content: "";
   overflow: hidden;
 
   // put limit here
@@ -56,7 +57,6 @@ export const FormBorder = styled.section`
   }
   &::after {
     // put border here
-    content: "";
     position: absolute;
     top: 50%;
     left: -50%;
@@ -71,12 +71,22 @@ export const FormBorder = styled.section`
     animation-delay: 0ms;
     animation-iteration-count: infinite;
     z-index: -1;
-  }
+  } */
+`;
+
+export const Main = styled(animated.main)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${(props) => props.theme.color.background};
+  min-height: 90vh;
+  overflow: hidden;
+  width: 100%;
 `;
 
 export const Form = styled.form`
-  width: 800px;
-  min-height: 720px;
+  width: 600px;
+  min-height: 100%;
   padding: 30px 0;
   display: flex;
   justify-content: center;
@@ -91,6 +101,7 @@ export const Form = styled.form`
   position: relative;
   z-index: 1;
   overflow: hidden;
+  margin: 0;
 
   &::before {
   }
@@ -114,9 +125,13 @@ export const Field = styled.article`
     padding: 0 20px;
   }
 
+  @media screen and (min-width: 601px) and (max-width: 1024px) {
+    width: 360px;
+  }
+
   &:focus-within {
     *::before {
-      width: 360px;
+      width: 80%;
     }
   }
 `;
@@ -252,15 +267,6 @@ export const Title = styled.h1`
 
 export const Description = styled.h2`
   color: ${(props) => props.theme.color.form.label};
-`;
-
-export const Main = styled(animated.main)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: ${(props) => props.theme.color.background};
-  min-height: 90vh;
-  overflow: hidden;
 `;
 
 export const FormDialog = styled.figure`
@@ -402,7 +408,13 @@ export const ShowPasswordSpan = styled.span`
 
 export const CheckEmail = styled.figure`
   position: relative;
-  width: 470px;
+  width: 475px;
+  @media screen and (max-width: 600px) {
+    width: 85%;
+  }
+  @media screen and (min-width: 601px) and (max-width: 1024px) {
+    width: 60%;
+  }
   * {
     position: absolute;
     left: 10px;

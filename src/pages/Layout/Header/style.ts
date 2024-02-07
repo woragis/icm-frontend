@@ -23,6 +23,7 @@ export const StyledHeader = styled.header`
   grid-template-columns: repeat(2, 1fr);
   z-index: 2;
   position: relative;
+  width: 100%;
   box-shadow: 0 1px 30px 1px ${(props) => props.theme.color.header.shadow};
 
   &::before {
@@ -57,6 +58,10 @@ export const Logo = styled.figure`
   align-items: center;
   flex-direction: row;
   position: relative;
+
+  @media screen and (max-width: 1024px) {
+    margin: 0 auto 0 10px;
+  }
 `;
 
 interface NavProps {
@@ -65,14 +70,17 @@ interface NavProps {
 
 export const StyledNavLinks = styled.nav<NavProps>`
   display: flex;
-  justify-content: center;
+  justify-content: end;
+  width: 100%;
   align-items: center;
+  gap: 10px;
 
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 1024px) {
+    height: 100%;
+    justify-content: center;
     flex-direction: column;
     position: fixed;
-    height: 100vh;
-    width: 100%;
+    width: 100lvw;
     top: 0;
     left: 0;
     opacity: ${(props) => (props.show ? 1 : 0)};
@@ -85,10 +93,9 @@ export const StyledNavLinks = styled.nav<NavProps>`
   }
 
   a {
-    margin-left: 20px;
     color: ${(props) => props.theme.color.header.links};
 
-    @media screen and (max-width: 600px) {
+    @media screen and (max-width: 1024px) {
       color: ${(props) => props.theme.color.header.background};
       text-shadow: ${(props) => props.theme.color.header.shadow} 0px 0px 30px;
       margin-bottom: 5px;
@@ -96,18 +103,25 @@ export const StyledNavLinks = styled.nav<NavProps>`
   }
 `;
 
-export const MobileNav = styled.figure`
+interface ThemeProps {
+  show: boolean;
+}
+
+export const MobileNav = styled.figure<ThemeProps>`
   display: none;
   * {
     color: ${(props) => props.theme.color.header.links};
   }
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 1024px) {
     display: block;
-    position: fixed;
+    position: absolute;
     top: -4px;
     right: 10px;
     z-index: 20;
     font-size: 40px;
+    * {
+      color: ${(props) => (props.show ? shade(0.5, props.theme.color.header.hover) : props.theme.color.header.links)};
+    }
   }
 `;
 
@@ -119,14 +133,18 @@ export const StyledLogo = styled.svg`
   }
 `;
 
-interface ThemeProps {
-  show: boolean;
-}
-
 export const StyledNavTheme = styled.aside<ThemeProps>`
-  position: absolute;
-  right: 0;
-  top: 0;
+  position: relative;
+  width: 130px;
+  margin-top: -47px;
+
+  @media screen and (max-width: 1024px) {
+    position: absolute;
+    margin-top: 0;
+    top: 50px;
+    right: 10px;
+    width: 100px;
+  }
 `;
 
 export const ThemeButton: any = styled.figure`
@@ -153,9 +171,16 @@ export const ThemeButton: any = styled.figure`
       cursor: pointer;
     }
   }
+  @media screen and (max-width: 1024px) {
+    svg {
+      fill: ${(props) => shade(0.6, props.theme.color.header.hover)};
+      background-color: ${(props) => props.theme.color.header.hover};
+      border-color: ${(props) => shade(0.5, props.theme.color.header.hover)};
+    }
+  }
 `;
 
-export const ThemeTitle = styled.p`
+export const ThemeTitle = styled.mark`
   color: ${(props) => props.theme.color.header.logo};
   background-color: ${(props) => shade(0.2, props.theme.color.header.background)};
   font-size: 1.5em;
@@ -187,6 +212,21 @@ export const ThemeTitle = styled.p`
     background-color: ${(props) => shade(0.2, props.theme.color.header.background)};
     z-index: -1;
   }
+
+  @media screen and (max-width: 1024px) {
+    color: ${(props) => shade(0.6, props.theme.color.header.hover)};
+    background-color: ${(props) => props.theme.color.header.hover};
+    border-color: ${(props) => shade(0.5, props.theme.color.header.hover)};
+    &::before {
+      background-color: ${(props) => props.theme.color.header.hover};
+      border-color: ${(props) => shade(0.5, props.theme.color.header.hover)};
+    }
+    padding-bottom: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 130px;
+  }
 `;
 
 export const ThemeList = styled.ul<ThemeProps>`
@@ -199,13 +239,21 @@ export const ThemeList = styled.ul<ThemeProps>`
   gap: 3px;
   position: absolute;
   padding: 25px 5px 10px;
-  height: 150px;
+  height: 120px;
   top: 25px;
   right: 11px;
   z-index: 20;
   border: 1px solid ${(props) => props.theme.color.header.logo};
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
+
+  @media screen and (max-width: 1024px) {
+    width: 150px;
+    height: 150px;
+    background-color: ${(porps) => porps.theme.color.header.hover};
+    border-color: ${(props) => shade(0.5, props.theme.color.header.hover)};
+    padding: 30px 0;
+  }
 `;
 
 export const Theme = styled.li`
@@ -236,5 +284,13 @@ export const Theme = styled.li`
     &:hover {
       cursor: pointer;
     }
+  }
+  @media screen and (max-width: 1024px) {
+    color: ${(props) => shade(0.5, props.theme.color.header.hover)};
+    svg {
+      fill: ${(props) => props.theme.color.header.hover};
+      border-color: ${(props) => shade(0.5, props.theme.color.header.hover)};
+    }
+    margin-left: -20px;
   }
 `;
