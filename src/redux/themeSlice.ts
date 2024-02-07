@@ -1,15 +1,12 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 interface ThemeInterface {
-  theme: "light" | "dark" | "automatic";
+  theme: "light" | "dark" | "neonDark" | "automatic";
 }
 
 // no automatico eu ja defino por aqui o tema
 
-const localTheme = localStorage.getItem("theme") as
-  | "light"
-  | "dark"
-  | "automatic";
+const localTheme = localStorage.getItem("theme") as "light" | "dark" | "neonDark" | "automatic";
 
 // get initial state of matchMedia
 
@@ -23,26 +20,12 @@ const themeSlice = createSlice({
   name: "theme",
   initialState: initialTheme,
   reducers: {
-    toggleManualTheme: (state) => {
-      if (state.theme === "light") {
-        localStorage.setItem("theme", "dark");
-        state.theme = "dark";
-      } else if (state.theme === "dark") {
-        localStorage.setItem("theme", "light");
-        state.theme = "light";
-      }
-    },
-    setAutomaticTheme: (state) => {
-      state.theme = "automatic";
-      localStorage.setItem("theme", "automatic");
-    },
-    setManualTheme: (state) => {
-      state.theme = "light";
-      localStorage.setItem("theme", "light");
+    setTheme: (state, action: PayloadAction<ThemeInterface>) => {
+      state.theme = action.payload.theme;
+      console.log(state.theme);
     },
   },
 });
 
-export const { toggleManualTheme, setAutomaticTheme, setManualTheme } =
-  themeSlice.actions;
+export const { setTheme } = themeSlice.actions;
 export default themeSlice.reducer;
