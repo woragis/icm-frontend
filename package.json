@@ -2,7 +2,7 @@
   "homepage": "https://woragis.github.io/icm-frontend",
   "name": "icm-frontend",
   "version": "0.1.1",
-  "private": true,
+  "private": false,
   "dependencies": {
     "@react-spring/web": "^9.7.3",
     "@reduxjs/toolkit": "^1.9.7",

@@ -5,14 +5,14 @@ const theme = {
       logo: "#D80032",
       links: "#D80032",
       shadow: "#8D99AE",
-      hover: "#2B2D42",
+      hover: "#FFFFFF",
     },
     footer: {
       text: "#EFE6DD",
       background: "#191919",
     },
     form: {
-      border: "none",
+      border: "EF233C",
       label: "#EDF2F4",
       background: "#EF233C",
       shadow: "none",

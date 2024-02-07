@@ -1,9 +1,9 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-import { StyledLocation, StyledType, StyledOption, StyledContribType, StyledField } from "./style";
+import { StyledOption, StyledContribType, Locations, Location } from "./style";
 import { useSpring } from "@react-spring/web";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { Button, Field, Form, Input, Label, Main, TextArea, Title } from "../../styles/GlobalStyles";
+import { Button, Field, Form, Input, Label, Main, Select, TextArea, Title } from "../../styles/GlobalStyles";
 
 const Contrib = () => {
   interface ICity {
@@ -319,34 +319,32 @@ const Contrib = () => {
           <Label htmlFor="name">Nome Completo</Label>
           <Input type="text" name="name" id="name" placeholder="Seu nome" value={contribFormData.name} onChange={HandleContribChange} />
         </Field>
-        <Field>
-          <StyledOption className="polo">
-            <label htmlFor="polo">Polo</label>
-            <select name="polo" id="polo" onChange={HandleContribChange}>
+        <Locations>
+          <Location className="polo">
+            <Label htmlFor="polo">Polo</Label>
+            <Select name="polo" id="polo" onChange={HandleContribChange}>
               <option value="Mangabeira">Mangabeira</option>
-            </select>
-          </StyledOption>
-          <StyledOption className="igreja">
-            <label htmlFor="church">Igreja</label>
-            <select name="church" id="church" onChange={HandleContribChange}>
+            </Select>
+          </Location>
+          <Location className="igreja">
+            <Label htmlFor="church">Igreja</Label>
+            <Select name="church" id="church" onChange={HandleContribChange}>
               <option value="Mangabeira">Mangabeira</option>
               <option value="Bancarios">Bancarios</option>
               <option value="CidadeVerde">Cidade Verde</option>
-            </select>
-          </StyledOption>
-        </Field>
-        <StyledType>
-          <div className="contrib-option">
-            <StyledContribType className="contrib-element">
-              <label htmlFor="texto">Contribuição de Texto</label>
-              <input type="radio" name="type" id="texto" defaultChecked={contribType === "text"} value="text" onChange={HandleContribChange} />
-            </StyledContribType>
-            <StyledContribType className="contrib-element">
-              <label htmlFor="video">Contribuição de Video</label>
-              <input type="radio" name="type" id="video" defaultChecked={contribType === "video"} value="video" onChange={HandleContribChange} />
-            </StyledContribType>
-          </div>
-        </StyledType>
+            </Select>
+          </Location>
+        </Locations>
+        <Locations>
+          <Location className="contrib-element">
+            <label htmlFor="texto">Contribuição de Texto</label>
+            <input type="radio" name="type" id="texto" defaultChecked={contribType === "text"} value="text" onChange={HandleContribChange} />
+          </Location>
+          <Location className="contrib-element">
+            <label htmlFor="video">Contribuição de Video</label>
+            <input type="radio" name="type" id="video" defaultChecked={contribType === "video"} value="video" onChange={HandleContribChange} />
+          </Location>
+        </Locations>
         {contribFormData.type === "text" && (
           <Field className="contrib-element text-contrib">
             <Label htmlFor="contrib">Contribuição escrita</Label>

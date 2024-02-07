@@ -11,7 +11,7 @@ function App() {
   const theme = useSelector((state: RootState) => state.theme.theme);
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="icm-frontend">
       <ThemeProvider
         theme={
           theme === "light"

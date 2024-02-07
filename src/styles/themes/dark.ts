@@ -12,9 +12,9 @@ const theme = {
       text: "#FFFFFF",
     },
     form: {
-      border: "#FFFFFF",
+      border: "#191919",
       label: "#EDF2F4",
-      background: "#090909",
+      background: "#191919",
       shadow: "none",
       input: {
         text: "#EDF2F4",
@@ -24,7 +24,7 @@ const theme = {
     main: "#F50039",
     text: "#2B2D42",
     shadow: "#8D99AE",
-    background: "#191919",
+    background: "#090909",
     secondary: "#720915",
   },
   shadow: {
