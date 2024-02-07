@@ -10,12 +10,19 @@ export const StyledFooter = styled.footer`
   background-color: ${(props) => props.theme.color.darkNeutral};
 `;
 
-export const StyledFooterSection = styled.section`
+export const FooterSection = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: 10px;
+`;
+
+export const FooterLink = styled.a`
   a {
     margin-top: 2px;
+  }
+
+  @media screen and (max-width: 600px) {
+    font-size: 0.8em;
   }
 `;
