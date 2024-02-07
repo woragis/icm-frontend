@@ -7,6 +7,15 @@ const theme = {
       shadow: "#8D99AE",
       hover: "#2B2D42",
     },
+    form: {
+      border: "none",
+      label: "#EDF2F4",
+      background: "#EF233C",
+      input: {
+        text: "#D80032",
+        background: "#EDF2F4",
+      },
+    },
     main: "#D80032",
     text: "#2B2D42",
     shadow: "#8D99AE",
@@ -32,13 +41,6 @@ const theme = {
     normalAccent: "#FFCA3A",
     lightAccent: "#FFDE85",
     darkAccent: "#F5B400",
-
-    form: {
-      border: "#EA4859",
-      label: {
-        color: "#000",
-      },
-    },
   },
   shadow: {
     size: {
